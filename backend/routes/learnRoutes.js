@@ -4,7 +4,6 @@ import {
   getAgroforestry,
   getMarketInfo,
 } from "../controllers/learnController.js";
-import { mongoose } from "../database/index.js";
 import Resource from "../models/Resource.js";
 
 const router = express.Router();

@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectDB, mongoose } from "./database/index.js";
 import learnRoutes from "./routes/learnRoutes.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
+import connectDB from "./database/db.js";
 
 dotenv.config();
 
