@@ -1,0 +1,13 @@
+{
+  "slug": "agroforestry",
+  "title": "Agroforestry",
+  "summary": "Integrating trees with crops for sustainable farming",
+  "content": "Agroforestry is a land use management system...",
+  "sections": [
+    {
+      "heading": "What is Agroforestry?",
+      "text": "Agroforestry involves..."
+    }
+  ],
+  "tags": ["sustainable farming", "trees"]
+}
