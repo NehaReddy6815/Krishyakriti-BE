@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import {
   getMulticropping,
   getAgroforestry,
@@ -26,6 +27,27 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Dynamic slug: try DB first, fall back to static controllers
+router.get('/:slug', async (req, res) => {
+  const { slug } = req.params;
+  try {
+    if (mongoose.connection.readyState === 1) {
+      const item = await Resource.findOne({ slug }).lean();
+      if (item) return res.json(item);
+    }
+
+    // fallback to existing controllers for known slugs
+    if (slug === 'multicropping') return getMulticropping(req, res);
+    if (slug === 'agroforestry') return getAgroforestry(req, res);
+    if (slug === 'market') return getMarketInfo(req, res);
+
+    return res.status(404).json({ message: 'Not found' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 

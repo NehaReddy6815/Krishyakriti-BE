@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "seed": "node database/seed.js"
+    "seed": "node database/seed.js",
+    "load:resources": "node database/loadResources.js",
+    "import": "node database/import.js",
+    "farmers": "node database/farmerData.js"
   },
   "dependencies": {
     "axios": "^1.6.0",
