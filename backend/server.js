@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import learnRoutes from "./routes/learnRoutes.js";
-import feedbackRoutes from "./routes/feedbackRoutes.js";
+import feedbackRoutes from "./routes/learn/feedbackRoutes.js";
 import connectDB from "./database/db.js";
+import mongoose from 'mongoose';
 import Farmer from "./models/Farmer.js";
 
 dotenv.config();
