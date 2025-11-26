@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { WebView } from "react-native-webview";
 import LearnCard from "../components/LearnCard";
 
 export default function Learn({ navigation }) {
+  // ------------------ STATE ------------------
   const [userLocation, setUserLocation] = useState("");
   const [nearbyKVKs, setNearbyKVKs] = useState([]);
   const [searching, setSearching] = useState(false);
 
+  // ------------------ KVK SEARCH ------------------
   const searchKVK = () => {
     if (!userLocation.trim()) {
       alert("Please enter a location.");
@@ -41,6 +44,29 @@ export default function Learn({ navigation }) {
     }, 1200);
   };
 
+  // ------------------ VIDEO SECTION ------------------
+  const videos = [
+    { id: "8AHXf9ocWXM", title: "Kavitha Mishra – Farming Journey" },
+    {
+      id: "vAtV81yYLe8",
+      title: "Engineer With 14 Years Experience Turned Farmer",
+    },
+    { id: "P-yU6tTUYts", title: "Hoskote Farmer Grows Apple" },
+    { id: "c5pekMjAapo", title: "Ravesh – Multilayer Farming" },
+    { id: "qBIuhgoFiKk", title: "Rajesh – Sandalwood Farming" },
+  ];
+
+  const [currentVideo, setCurrentVideo] = useState(0);
+
+  const nextVideo = () => {
+    setCurrentVideo((prev) => (prev < videos.length - 1 ? prev + 1 : 0));
+  };
+
+  const prevVideo = () => {
+    setCurrentVideo((prev) => (prev > 0 ? prev - 1 : videos.length - 1));
+  };
+
+  // ------------------ UI ------------------
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Learn</Text>
@@ -64,7 +90,35 @@ export default function Learn({ navigation }) {
         />
       </View>
 
-      {/* KVK SEARCH */}
+      {/* ------------------ VIDEO CAROUSEL ------------------ */}
+      <Text style={styles.sectionTitle}>Farmer Success Stories</Text>
+
+      <View style={styles.videoBox}>
+        <WebView
+          source={{
+            uri: `https://www.youtube.com/embed/${videos[currentVideo].id}`,
+          }}
+          allowsFullscreenVideo
+        />
+      </View>
+
+      <Text style={styles.videoTitle}>{videos[currentVideo].title}</Text>
+
+      <Text style={styles.videoCount}>
+        Video {currentVideo + 1} / {videos.length}
+      </Text>
+
+      <View style={styles.controls}>
+        <TouchableOpacity style={styles.navBtn} onPress={prevVideo}>
+          <Text style={styles.navBtnText}>⬅ Previous</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.navBtn} onPress={nextVideo}>
+          <Text style={styles.navBtnText}>Next ➡</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* ------------------ KVK SEARCH ------------------ */}
       <Text style={styles.sectionTitle}>Find Nearest KVK</Text>
 
       <TextInput
@@ -80,7 +134,6 @@ export default function Learn({ navigation }) {
         </Text>
       </TouchableOpacity>
 
-      {/* Display Search Results */}
       {nearbyKVKs.length > 0 && (
         <View style={styles.resultsContainer}>
           {nearbyKVKs.map((kvk) => (
@@ -101,11 +154,12 @@ export default function Learn({ navigation }) {
         <Text style={styles.feedbackBtnText}>Send Feedback</Text>
       </TouchableOpacity>
 
-      <View style={{ height: 50 }} />
+      <View style={{ height: 60 }} />
     </ScrollView>
   );
 }
 
+// ------------------ STYLES ------------------
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -121,11 +175,48 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+
+  // Videos
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     marginTop: 30,
+    marginBottom: 10,
   },
+  videoBox: {
+    height: 230,
+    backgroundColor: "#000",
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  videoTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 10,
+  },
+  videoCount: {
+    color: "#009179",
+    fontWeight: "600",
+    marginTop: 4,
+    marginBottom: 10,
+  },
+  controls: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 25,
+  },
+  navBtn: {
+    backgroundColor: "#009179",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  navBtnText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+
+  // KVK
   input: {
     borderWidth: 1,
     borderColor: "#009179",
@@ -160,6 +251,8 @@ const styles = StyleSheet.create({
   kvkText: {
     marginTop: 4,
   },
+
+  // Feedback
   feedbackBtn: {
     marginTop: 30,
     backgroundColor: "#006A58",

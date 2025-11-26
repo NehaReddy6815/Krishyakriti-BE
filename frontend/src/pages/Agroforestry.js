@@ -1,13 +1,46 @@
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView, Text, View, StyleSheet } from "react-native";
 
-export default function AgroforestryScreen() {
+export default function Agroforestry() {
   return (
-    <ScrollView style={{ padding: 20 }}>
-      <Text style={{ fontSize: 26, fontWeight: "bold" }}>Agroforestry</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>🌳 Agroforestry</Text>
 
-      <Text style={{ marginTop: 20 }}>
-        Agroforestry integrates trees with agriculture...
+      <Text style={styles.title}>What is Agroforestry?</Text>
+      <Text style={styles.text}>
+        Agroforestry means growing trees along with crops or livestock. It helps
+        farmers get steady income and protects the environment.
       </Text>
+
+      <Text style={styles.title}>Benefits</Text>
+      <Text style={styles.point}>• Soil becomes richer and fertile</Text>
+      <Text style={styles.point}>• Extra income from timber & fruits</Text>
+      <Text style={styles.point}>• Trees reduce wind & water erosion</Text>
+      <Text style={styles.point}>• Better micro-climate for crops</Text>
+      <Text style={styles.point}>• Increases groundwater recharge</Text>
+
+      <Text style={styles.title}>Suitable Trees for Karnataka</Text>
+      <Text style={styles.point}>• Neem — pest repellent</Text>
+      <Text style={styles.point}>• Mango — fruit value</Text>
+      <Text style={styles.point}>• Silver Oak — shade & timber</Text>
+      <Text style={styles.point}>• Sandalwood — high value crop</Text>
+      <Text style={styles.point}>• Tamarind — long-term income</Text>
+      <Text style={styles.point}>• Bamboo — multipurpose</Text>
+
+      <Text style={styles.title}>Types of Agroforestry</Text>
+      <Text style={styles.point}>• Alley cropping — crops grown between trees</Text>
+      <Text style={styles.point}>• Silvopasture — trees + livestock</Text>
+      <Text style={styles.point}>• Windbreaks — tree rows protecting crops</Text>
+      <Text style={styles.point}>• Boundary planting</Text>
+
+      <View style={{ height: 40 }} />
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { padding: 20, backgroundColor: "white" },
+  header: { fontSize: 30, fontWeight: "bold", marginBottom: 20 },
+  title: { fontSize: 20, marginTop: 20, fontWeight: "bold" },
+  text: { fontSize: 16, marginTop: 8, lineHeight: 22 },
+  point: { fontSize: 16, marginTop: 6 },
+});
