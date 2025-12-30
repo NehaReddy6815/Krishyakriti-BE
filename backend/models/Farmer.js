@@ -7,9 +7,4 @@ const FarmerSchema = new mongoose.Schema({
   phone: { type: String, index: true }
 }, { timestamps: true });
 
-// Ensure indexes are created
-FarmerSchema.plugin(function(schema) {
-  schema.index({ farmerId: 1 }, { unique: true });
-});
-
 export default mongoose.models.Farmer || mongoose.model("Farmer", FarmerSchema);

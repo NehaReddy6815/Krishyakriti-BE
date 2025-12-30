@@ -9,10 +9,11 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { WebView } from "react-native-webview";
-import LearnCard from "../components/LearnCard";
-import { BACKEND_URL } from "../config";
+import { router } from 'expo-router';
+import { BACKEND_URL } from "../src/config";
 
-export default function Learn({ navigation }) {
+export default function Learn() {
+  
   // ------------------ STATE ------------------
   const [userLocation, setUserLocation] = useState("");
   const [nearbyKVKs, setNearbyKVKs] = useState([]);
@@ -126,6 +127,11 @@ export default function Learn({ navigation }) {
     setCurrentVideo((prev) => (prev > 0 ? prev - 1 : videos.length - 1));
   };
 
+  // Navigate to different screens
+  const navigateToScreen = (screenName: string) => {
+    router.push(`/${screenName}`);
+  };
+
   // ------------------ UI ------------------
   return (
     <ScrollView style={styles.container}>
@@ -141,12 +147,16 @@ export default function Learn({ navigation }) {
           {/* Top Cards - Dynamic from API */}
           <View style={styles.cardRow}>
             {learningResources.map((resource, index) => (
-              <LearnCard
+              <TouchableOpacity
                 key={resource._id || index}
-                label={resource.title}
-                icon={getResourceIcon(resource.slug)}
-                onPress={() => navigation.navigate(getScreenName(resource.slug))}
-              />
+                style={styles.learnCard}
+                onPress={() => navigateToScreen(getScreenName(resource.slug))}
+              >
+                <View style={styles.iconContainer}>
+                  <Text style={styles.iconText}>{getResourceIcon(resource.slug)}</Text>
+                </View>
+                <Text style={styles.cardLabel}>{resource.title}</Text>
+              </TouchableOpacity>
             ))}
           </View>
         </>
@@ -211,7 +221,7 @@ export default function Learn({ navigation }) {
       {/* Feedback Button */}
       <TouchableOpacity
         style={styles.feedbackBtn}
-        onPress={() => navigation.navigate("Feedback")}
+        onPress={() => navigateToScreen('Feedback')}
       >
         <Text style={styles.feedbackBtnText}>Send Feedback</Text>
       </TouchableOpacity>
@@ -222,7 +232,7 @@ export default function Learn({ navigation }) {
 }
 
 // Helper function to get icon based on resource slug
-const getResourceIcon = (slug) => {
+const getResourceIcon = (slug: string) => {
   switch (slug) {
     case 'multicropping':
       return '🌱';
@@ -236,10 +246,10 @@ const getResourceIcon = (slug) => {
 };
 
 // Helper function to get screen name based on resource slug
-const getScreenName = (slug) => {
+const getScreenName = (slug: string) => {
   switch (slug) {
     case 'multicropping':
-      return 'Multicropping';
+      return 'MultiCropping';
     case 'agroforestry':
       return 'Agroforestry';
     case 'market':
@@ -247,7 +257,7 @@ const getScreenName = (slug) => {
     default:
       return 'Learn';
   }
-}
+};
 
 // ------------------ STYLES ------------------
 const styles = StyleSheet.create({
@@ -275,6 +285,31 @@ const styles = StyleSheet.create({
   cardRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  learnCard: {
+    backgroundColor: "#E7E1C6",
+    padding: 20,
+    borderRadius: 16,
+    alignItems: "center",
+    flex: 1,
+    marginHorizontal: 2,
+  },
+  iconContainer: {
+    backgroundColor: "#009179",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  iconText: {
+    fontSize: 30,
+    color: "white",
+  },
+  cardLabel: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
 
   // Videos

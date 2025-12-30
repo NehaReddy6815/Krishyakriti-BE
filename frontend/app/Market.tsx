@@ -1,6 +1,6 @@
 import { ScrollView, Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../src/config";
 
 export default function Market() {
   const [content, setContent] = useState(null);
